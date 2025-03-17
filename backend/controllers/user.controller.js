@@ -8,7 +8,7 @@ export const register = async (req, res) => {
         console.log(fullname, email, phoneNumber, password, role);
         if (!fullname || !email || !phoneNumber || !password || !role) {
             return res.status(400).json({
-                message: "something is missing",
+                message: "Something is missing",
                 SUCCESS: false
             });
         };
@@ -45,7 +45,7 @@ export const login = async (req, res) => {
 
         if (!email || !password || !role) {
             return res.status(400).json({
-                message: "something is missing",
+                message: "Something is missing",
                 SUCCESS: false
             });
         };
@@ -53,7 +53,7 @@ export const login = async (req, res) => {
         let user = await User.findOne({ email });
         if (!user) {
             return res.status(400).json({
-                message: "incorrect email or password",
+                message: "Incorrect email or password",
                 SUCCESS: false,
             })
         }
@@ -61,7 +61,7 @@ export const login = async (req, res) => {
         const isPasswordmatch = await bcrypt.compare(password, user.password);
         if (!isPasswordmatch) {
             return res.status(400).json({
-                message: "incorrect email or password",
+                message: "Incorrect email or password",
                 SUCCESS: false,
             })
         };
@@ -88,7 +88,7 @@ export const login = async (req, res) => {
         }
 
         return res.status(200).cookie("token", token, { maxAge: 1 * 24 * 60 * 60 * 1000, httpOnly: true, sameStite: 'strict' }).json({
-            message: `Welcoe back ${user.fullname}`,
+            message: `Welcome back ${user.fullname}`,
             user,
             SUCCESS: true
         })
