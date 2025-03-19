@@ -25,7 +25,6 @@ const Jobs = () => {
                     ))
                   }
                 </div>
-
               </div>
             )
 

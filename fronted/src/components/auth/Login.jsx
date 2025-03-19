@@ -19,7 +19,7 @@ const Login = () => {
     role: "",
   });
 
-  const {loading} = useSelector(store=>store.auth);
+  const { loading } = useSelector(store => store.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -32,13 +32,13 @@ const Login = () => {
 
     try {
       dispatch(setLoading(true));
-      const res = await axios.post(`${USER_API_END_POINT}/login`, input,{
-        headers:{
-          "Content-Type":"application/json"
+      const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
+        headers: {
+          "Content-Type": "application/json"
         },
-        withCredentials:true,
+        withCredentials: true,
       });
-      if(res.data.SUCCESS){ 
+      if (res.data.SUCCESS) {
         dispatch(setUser(res.data.user));
         navigate("/");
         toast.success(res.data.message);
@@ -47,7 +47,7 @@ const Login = () => {
       console.log(error);
       toast.error(error.response.data.message);
     }
-    finally{
+    finally {
       dispatch(setLoading(false));
     }
   }
@@ -56,7 +56,7 @@ const Login = () => {
     <>
       <Navbar />
       <div className='flex items-center justify-center max-w-7xl mx-auto'>
-        <form onSubmit={submitHandler} className='w-1/2 border-gray-200 rounded-md p-4 my-10'>
+        <form onSubmit={submitHandler} className='w-1/2 border-gray-200 border-2 rounded-md p-4 my-16'>
           <h1 className='font-bold text-2xl text-center mb-5'>Login</h1>
           <div className='my-2'>
             <Label>Email</Label>
@@ -65,7 +65,7 @@ const Login = () => {
               value={input.email}
               name="email"
               onChange={changeEventHandler}
-              placeholder="utsav@gmail.com"
+              placeholder="Enter your email"
             />
           </div>
           <div className='my-2'>
@@ -103,9 +103,8 @@ const Login = () => {
             </RadioGroup>
           </div>
           {
-            loading ?<Button className='w-full my-4'> <Loader2 className='mr-2 h-4 w-4 animate-spin'/>Please wait</Button>:
-
-          <Button type="submit" className='w-full my-4'>Login</Button>
+            loading ? <Button className='w-full my-4'> <Loader2 className='mr-2 h-4 w-4 animate-spin' />Please wait</Button> :
+              <Button type="submit" className='w-full my-4'>Login</Button>
           }
           <span className='text-sm'>Don't have an account? <Link to='/signup' className='text-blue-600'>Signup</Link></span>
         </form>
