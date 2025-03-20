@@ -13,24 +13,28 @@ import { setUser } from '@/redux/authSlice'
 const Navbar = () => {
   const { user } = useSelector(store => store.auth);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const neviget = useNavigate();
 
   const logoutHandler = async () => {
     try {
       const res = await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true });
-      if (res.data.success) {
+      // console.log('Logout button clicked');
+      // console.log(res.data);
+      if (res.data) {
         dispatch(setUser(null));
-        navigate("/");
+        console.log("clicked");
+        neviget("/");
         toast.success(res.data.message);
       }
     } catch (error) {
       console.log(error);
-      toast.error(res.data.message);
+      toast.error(error.response.data.message);
     }
   }
+
   return (
     <div className='bg-white'>
-      <div className='flex items-center justify-between mx-auto max-w-7xl my-2'>
+      <div className='flex items-center justify-between mx-auto max-w-7xl my-2 h-16'>
         <div>
           <h1 className='text-2xl font-bold'>Job <span className='text-[#F83002]'>Portal</span></h1>
         </div>
@@ -51,28 +55,28 @@ const Navbar = () => {
               <Popover>
                 <PopoverTrigger asChild>
                   <Avatar className='cursor-pointer'>
-                    <AvatarImage src="https://github.com/shadcn.png" alt="photo" />
+                    <AvatarImage src={user?.profile?.profilePhoto} alt="Photo" />
                   </Avatar>
                 </PopoverTrigger>
                 <PopoverContent className='w-80'>
                   <div className=''>
                     <div className='flex gap-4 space-y-2'>
                       <Avatar className='cursor-pointer'>
-                        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                        <AvatarImage src={user?.profile?.profilePhoto} alt="Photo" />
                       </Avatar>
                       <div>
-                        <h4 className='font-medium '>Utsav Prajapati</h4>
-                        <p className='text-sm text-muted-foreground'>Lorem ipsum dolor sit amet.</p>
+                        <h4 className='font-medium '>{user?.fullname}</h4>
+                        <p className='text-sm text-muted-foreground'>{user?.profile?.bio}</p>
                       </div>
                     </div>
                     <div className='flex flex-col my-2 text-gray-600'>
                       <div className='flex w-fit items-center gap-2 cursor-pointer'>
                         <User2 />
-                        <Button variant="link"> <Link to='/profile'>View Profile</Link></Button>
+                        <Button variant="link"><Link to='/profile'>View Profile</Link></Button>
                       </div>
                       <div className='flex w-fit items-center gap-2 cursor-pointer'>
                         <LogOut />
-                        <Button onClick={logoutHandler} variant="link" className='cursor-pointer'>Logout</Button>
+                        <Button onClick={logoutHandler} className="cursor-pointer" variant="link">Logout</Button>
                       </div>
                     </div>
                   </div>
