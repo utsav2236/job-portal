@@ -21,7 +21,7 @@ const Signup = () => {
     role: "",
     file: ""
   });
-  const {loading} = useSelector(store=>store.auth);
+  const { loading } = useSelector(store => store.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -40,25 +40,25 @@ const Signup = () => {
     formData.append("phoneNumber", input.phoneNumber);
     formData.append("password", input.password);
     formData.append("role", input.role);
-    if(input.file){
-      formData.append("file",input.file);
+    if (input.file) {
+      formData.append("file", input.file);
     }
     try {
       dispatch(setLoading(true));
-      const res = await axios.post(`${USER_API_END_POINT}/register`, formData,{
-        headers:{
-          "Content-Type":"multipart/form-data"
+      const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
         },
-        withCredentials:true,
+        withCredentials: true,
       });
-      if(res.data.SUCCESS){
+      if (res.data.SUCCESS) {
         navigate("/login")
         toast.success(res.data.message);
       }
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
-    } finally{
+    } finally {
       dispatch(setLoading(false));
     }
   }
@@ -69,8 +69,9 @@ const Signup = () => {
         <form onSubmit={submitHandler} className='w-1/2 border-gray-200 border-2 rounded-md p-4 my-10'>
           <h1 className='font-bold text-2xl mb-5 text-center'>Signup</h1>
           <div className='my-2'>
-            <Label>Full Name</Label>
+            <Label htmlFor="fname">Full Name</Label>
             <Input
+              id='fname'
               type='text'
               value={input.fullname}
               name="fullname"
@@ -78,24 +79,30 @@ const Signup = () => {
               placeholder="Utsav" />
           </div>
           <div className='my-2'>
-            <Label>Email</Label>
-            <Input type='email'
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id='email'
+              type='email'
               value={input.email}
               name="email"
               onChange={changeEventHandler}
               placeholder="utsav@gmail.com" />
           </div>
           <div className='my-2'>
-            <Label>Phone Number</Label>
-            <Input type='text'
+            <Label htmlFor="email">Phone Number</Label>
+            <Input
+              id='phone'
+              type='text'
               value={input.phoneNumber}
               name="phoneNumber"
               onChange={changeEventHandler}
               placeholder="9934349233" />
           </div>
           <div className='my-2'>
-            <Label>Password</Label>
-            <Input type='password'
+            <Label htmlFor="email">Password</Label>
+            <Input
+              id='password'
+              type='password'
               value={input.password}
               name="password"
               onChange={changeEventHandler}
@@ -105,6 +112,7 @@ const Signup = () => {
             <RadioGroup className='flex items-center gap-4 my-5'>
               <div className="flex items-center space-x-2">
                 <Input
+                  id='r1'
                   type="radio"
                   name='role' value='student'
                   checked={input.role === 'student'}
@@ -114,6 +122,7 @@ const Signup = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <Input
+                  id='r2'
                   type="radio"
                   name='role'
                   value='recruiter'
@@ -124,14 +133,14 @@ const Signup = () => {
               </div>
             </RadioGroup>
             <div className='flex items-center gap-2'>
-              <Label>Profile</Label>
-              <Input accept="image//*" type="file" onChange={changeFileHandler} className='cursor-pointer' />
+              <Label htmlFor="file">Profile</Label>
+              <Input id="file" accept="image//*" type="file" onChange={changeFileHandler} className='cursor-pointer' />
             </div>
           </div>
           {
-            loading ?<Button className='w-full my-4'> <Loader2 className='mr-2 h-4 w-4 animate-spin'/>Please wait</Button>:
+            loading ? <Button className='w-full my-4'> <Loader2 className='mr-2 h-4 w-4 animate-spin' />Please wait</Button> :
 
-          <Button type="submit" className='w-full my-4'>Signup</Button>
+              <Button type="submit" className='w-full my-4'>Signup</Button>
           }
           <span className='text-sm'>Alredy have an account? <Link to='/login' className='text-blue-600'>Login</Link></span>
         </form>

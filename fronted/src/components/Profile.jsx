@@ -26,7 +26,7 @@ const Profile = () => {
                     <div className='flex items-center gap-4'>
 
                         <Avatar className='h-24 w-24'>
-                            <AvatarImage src="https://www.svgrepo.com/show/303106/mcdonald-s-15-logo.svg" alt="profile" />
+                            <AvatarImage src={user?.profile?.profilePhoto} alt="profile" />
                         </Avatar>
                         <div>
                             <h1 className='font-medium text-xl'>{user?.fullname}</h1>

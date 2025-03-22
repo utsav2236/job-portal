@@ -59,8 +59,9 @@ const Login = () => {
         <form onSubmit={submitHandler} className='w-1/2 border-gray-200 border-2 rounded-md p-4 my-16'>
           <h1 className='font-bold text-2xl text-center mb-5'>Login</h1>
           <div className='my-2'>
-            <Label>Email</Label>
+            <Label htmlFor="email">Email</Label>
             <Input
+              id="email"
               type="email"
               value={input.email}
               name="email"
@@ -69,8 +70,9 @@ const Login = () => {
             />
           </div>
           <div className='my-2'>
-            <Label>Password</Label>
+            <Label htmlFor="pass">Password</Label>
             <Input
+              id="pass"
               type="password"
               value={input.password}
               name="password"
@@ -81,6 +83,7 @@ const Login = () => {
             <RadioGroup className='flex items-center gap-4 my-5'>
               <div className="flex items-center space-x-2">
                 <Input
+                  id="r1"
                   type="radio"
                   name='role'
                   value='student'
@@ -92,6 +95,7 @@ const Login = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <Input
+                  id="r2"
                   type="radio"
                   name='role'
                   value='recruiter'

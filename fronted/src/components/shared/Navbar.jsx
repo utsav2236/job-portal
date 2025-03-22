@@ -40,9 +40,20 @@ const Navbar = () => {
         </div>
         <div className='flex items-center gap-12'>
           <ul className='flex font-medium items-center gap-5'>
-            <li><Link to='/'>Home</Link></li>
-            <li><Link to='/jobs'>Jobs</Link></li>
-            <li><Link to='/browse'>Browse</Link></li>
+            {
+              user && user.role === 'recruiter' ? (
+                <>
+                 <li><Link to='/admin/companies'>Companies</Link></li>
+                 <li><Link to='/admin/jobs'>Jobs</Link></li>
+                </>
+              ) :(
+                <>
+                <li><Link to='/'>Home</Link></li>
+                <li><Link to='/jobs'>Jobs</Link></li>
+                <li><Link to='/browse'>Browse</Link></li>
+                </>
+              )
+            }
 
           </ul>
           {
@@ -54,7 +65,7 @@ const Navbar = () => {
             ) : (
               <Popover>
                 <PopoverTrigger asChild>
-                  <Avatar className='cursor-pointer'>
+                  <Avatar className='cursor-pointer border-2'>
                     <AvatarImage src={user?.profile?.profilePhoto} alt="Photo" />
                   </Avatar>
                 </PopoverTrigger>
@@ -70,10 +81,14 @@ const Navbar = () => {
                       </div>
                     </div>
                     <div className='flex flex-col my-2 text-gray-600'>
+                      {
+                        user && user.role === 'student' &&  (
                       <div className='flex w-fit items-center gap-2 cursor-pointer'>
                         <User2 />
                         <Button variant="link"><Link to='/profile'>View Profile</Link></Button>
                       </div>
+                        )
+                      }
                       <div className='flex w-fit items-center gap-2 cursor-pointer'>
                         <LogOut />
                         <Button onClick={logoutHandler} className="cursor-pointer" variant="link">Logout</Button>
