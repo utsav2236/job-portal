@@ -50,7 +50,7 @@ export const getAppliedJobs = async (req, res) => {
         const application = await Application.find({ applicant: userId }).sort({ createdAt: -1 }).populate({
             path: 'job',
             options: { sort: { createdAt: -1 } },
-            popupate: {
+            populate: {
                 path: "company",
                 options: { sort: { createdAt: -1 } },
             }
