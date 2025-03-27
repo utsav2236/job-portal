@@ -65,7 +65,7 @@ const Login = () => {
           <h1 className='font-bold text-2xl text-center mb-5'>Login</h1>
           <div className='my-2'>
             <Label htmlFor="email">Email</Label>
-            <Input
+            <Input className="my-3"
               id="email"
               type="email"
               value={input.email}
@@ -76,7 +76,7 @@ const Login = () => {
           </div>
           <div className='my-2'>
             <Label htmlFor="pass">Password</Label>
-            <Input
+            <Input className="my-3"
               id="pass"
               type="password"
               value={input.password}

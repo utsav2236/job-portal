@@ -74,38 +74,38 @@ const Signup = () => {
         <form onSubmit={submitHandler} className='w-1/2 border-gray-200 border-2 rounded-md p-4 my-10'>
           <h1 className='font-bold text-2xl mb-5 text-center'>Signup</h1>
           <div className='my-2'>
-            <Label htmlFor="fname">Full Name</Label>
-            <Input
+            <Label  className="mb-2" htmlFor="fname">Full Name</Label>
+            <Input className="mb-2"
               id='fname'
               type='text'
               value={input.fullname}
               name="fullname"
               onChange={changeEventHandler}
-              placeholder="Utsav" />
+              placeholder="Enter your Full Name" />
           </div>
           <div className='my-2'>
             <Label htmlFor="email">Email</Label>
-            <Input
+            <Input className="my-2"
               id='email'
               type='email'
               value={input.email}
               name="email"
               onChange={changeEventHandler}
-              placeholder="utsav@gmail.com" />
+              placeholder="Enter Your mail" />
           </div>
           <div className='my-2'>
             <Label htmlFor="email">Phone Number</Label>
-            <Input
+            <Input className="my-2"
               id='phone'
               type='text'
               value={input.phoneNumber}
               name="phoneNumber"
               onChange={changeEventHandler}
-              placeholder="9934349233" />
+              placeholder="Enter your Phone number" />
           </div>
           <div className='my-2'>
             <Label htmlFor="email">Password</Label>
-            <Input
+            <Input className="my-2"
               id='password'
               type='password'
               value={input.password}
