@@ -20,9 +20,9 @@ const Profile = () => {
     const {user} = useSelector(store=>store.auth);
 
     return (
-        <div>
+        <div className='bg-gray-400'>
             <Navbar />
-            <div className='max-w-4xl mx-auto bg-white border-gray-200 border rounded-2xl my-5 p-8'>
+            <div className='max-w-4xl mx-auto bg-white border-gray-200 border rounded-2xl my-5 p-10'>
                 <div className='flex justify-between'>
                     <div className='flex items-center gap-4'>
 
@@ -62,7 +62,7 @@ const Profile = () => {
                 </div>
             </div>
                 <div className='max-w-4xl mx-auto bg-white rounded-2xl '>
-                    <h1 className='font-bold text-lg my-5'>Applied Jobs</h1>
+                    <h1 className='font-bold text-lg my-5 p-2.5'>Applied Jobs</h1>
                     <AppliedJobTable/>
                 </div>
                 <UpdateProfileDialog open={open} setOpen={setOpen}/>

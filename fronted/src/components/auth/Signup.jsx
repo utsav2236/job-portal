@@ -24,9 +24,15 @@ const Signup = () => {
   const { loading,user } = useSelector(store => store.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // validation st
+
+  // end
 
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
+    // validation st
+    
+    // end
   }
 
   const changeFileHandler = (e) => {

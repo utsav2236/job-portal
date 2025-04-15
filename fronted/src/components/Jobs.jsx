@@ -33,7 +33,7 @@ const Jobs = () => {
             <FillterCard />
           </div>
           {
-            fillterJobs.length <= 0 ? <span>Job not found</span> : (
+            fillterJobs.length <= 0 ? <span className='font-bold text-2xl text-red-500'>Job not found</span> : (
               <div className='flex-1 h-[88vh] overflow-y-auto pb-5'>
                 <div className='grid grid-cols-3 gap-4'>
                   {

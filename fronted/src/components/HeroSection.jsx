@@ -17,6 +17,8 @@ const HeroSection = () => {
   
   return (
     <div className='text-center bg-center'>
+      <div>
+        <img src="" alt="" />
       <div className='flex flex-col gap-5 my-10'>
         <span className='mx-auto px-4 py-2 rounded-full bg-gray-100 text-red-500 font-medium'>No.1 Job Hunt Website</span>
         <h1 className='text-5xl font-bold'>Search Apply & <br /> Get Your <span className='text-blue-600'>Dream Job</span></h1>
@@ -32,6 +34,7 @@ const HeroSection = () => {
             <Search className='h-5 w-5'/>
            </Button>
         </div>
+      </div>
       </div>
     </div>
   )

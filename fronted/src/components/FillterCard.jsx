@@ -7,15 +7,19 @@ import { setSearchedQuery } from '@/redux/jobSlice'
 const fillterData = [
   {
     fillterType: "Location",
-    array: ["Delhi", "NCR", "Banglore", "Hydrabad", "Pune", "Mumbai"]
+    array: ["Ahmedabad", "Banglore", "Pune", "Hydrabad", "Mumbai"]
   },
   {
     fillterType: "Industry",
     array: ["Fronted Dev", "Backend Developer", "Fullstack Developer"]
   },
   {
-    fillterType: "Salary",
-    array: ["0-40", "42-1lakh", "1 lakh to 5 lakh"]
+    fillterType: "Job Type",
+    array: ["Part time", "Full time","Remote"]
+  },
+  {
+    fillterType: "Experience",
+    array: ["Frasher", "2 year","5 Year"]
   },
 ]
 

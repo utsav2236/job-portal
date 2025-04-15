@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 const AppliedJobTable = () => {
     const {allAppliedJobs} = useSelector(store=>store.job);
   return (
-    <div>
+    <div className='px-10'>
         <Table>
             <TableCaption>A List Of Your Applied Jobs</TableCaption>
             <TableHeader>
@@ -19,7 +19,7 @@ const AppliedJobTable = () => {
             </TableHeader>
             <TableBody>
                 {
-                    allAppliedJobs.length <= 0 ? <span>you have not applied any job.</span> : allAppliedJobs.map((appliedJob)=> (
+                    allAppliedJobs.length <= 0 ? <span className='font-bold text-gray-600'>you have not applied any job.</span> : allAppliedJobs.map((appliedJob)=> (
                         <TableRow key={appliedJob._id}>
                             <TableCell>{appliedJob?.createdAt?.split("T")[0]}</TableCell>
                             <TableCell>{appliedJob?.job?.title}</TableCell>

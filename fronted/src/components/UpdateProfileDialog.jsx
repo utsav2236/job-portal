@@ -101,7 +101,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                 />
                             </div>
                             <div className='grid grid-cols-4 items-center gap-4'>
-                                <Label htmlFor='number' className='text-right'>Number</Label>
+                                <Label htmlFor='number' className='text-right'>Mobile No</Label>
                                 <Input
                                     id='number'
                                     name='number'
