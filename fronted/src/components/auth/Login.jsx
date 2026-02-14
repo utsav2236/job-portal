@@ -60,9 +60,12 @@ const Login = () => {
   return (
     <>
       <Navbar />
-      <div className='flex items-center justify-center max-w-7xl mx-auto'>
-        <form onSubmit={submitHandler} className='w-1/2 border-gray-200 border-2 rounded-md p-4 my-16'>
-          <h1 className='font-bold text-2xl text-center mb-5'>Login</h1>
+      <div
+  className='flex items-center justify-center min-h-screen bg-cover bg-center'
+  style={{ backgroundImage: `url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1470&q=80')` }}
+>
+        <form onSubmit={submitHandler} className='w-1/2 bg-white bg-opacity-90 border-gray-200 border-2 rounded-md p-6 my-16 shadow-lg backdrop-blur-md'>
+          <h1 className='font-bold text-3xl text-center mb-5'>Login</h1>
           <div className='my-2'>
             <Label htmlFor="email">Email</Label>
             <Input className="my-3"
@@ -115,7 +118,7 @@ const Login = () => {
             loading ? <Button className='w-full my-4'> <Loader2 className='mr-2 h-4 w-4 animate-spin' />Please wait</Button> :
               <Button type="submit" className='w-full my-4'>Login</Button>
           }
-          <span className='text-sm'>Don't have an account? <Link to='/signup' className='text-blue-600'>Signup</Link></span>
+          <span className='text-md mx-44'>Don't have an account? <Link to='/signup' className='text-blue-600'>Signup</Link></span>
         </form>
       </div>
     </>

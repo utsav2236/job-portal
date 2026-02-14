@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import Navbar from '../shared/Navbar'
-import { Label } from '../ui/label'
-import { Input } from '../ui/input'
-import { RadioGroup } from '../ui/radio-group'
-import { Button } from '../ui/button'
-import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import { USER_API_END_POINT } from '@/utils/constant'
-import { toast } from 'sonner'
-import { useDispatch, useSelector } from 'react-redux'
-import { setLoading } from '@/redux/authSlice'
-import { Loader2 } from 'lucide-react'
+import React, { useEffect, useState } from 'react';
+import Navbar from '../shared/Navbar';
+import { Label } from '../ui/label';
+import { Input } from '../ui/input';
+import { RadioGroup } from '../ui/radio-group';
+import { Button } from '../ui/button';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { USER_API_END_POINT } from '@/utils/constant';
+import { toast } from 'sonner';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoading } from '@/redux/authSlice';
+import { Loader2 } from 'lucide-react';
 
 const Signup = () => {
   const [input, setInput] = useState({
@@ -21,25 +21,74 @@ const Signup = () => {
     role: "",
     file: ""
   });
-  const { loading,user } = useSelector(store => store.auth);
+
+  const [errors, setErrors] = useState({
+    fullname: "",
+    phoneNumber: "",
+    password: ""
+  });
+
+  const { loading, user } = useSelector(store => store.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // validation st
 
-  // end
+  const validate = () => {
+    let isValid = true;
+    const newErrors = {
+      fullname: "",
+      phoneNumber: "",
+      password: ""
+    };
+
+    if (!input.fullname.trim()) {
+      newErrors.fullname = "Username is required";
+      isValid = false;
+    } else if (input.fullname.length < 3) {
+      newErrors.fullname = "Username must be at least 3 characters";
+      isValid = false;
+    } else if (/^\d/.test(input.fullname)) {
+      newErrors.fullname = "Invalid Username";
+      isValid = false;
+    }
+
+    if (!input.phoneNumber.trim()) {
+      newErrors.phoneNumber = "Phone number is required";
+      isValid = false;
+    } else if (!/^\d{10}$/.test(input.phoneNumber)) {
+      newErrors.phoneNumber = "Phone number must be exactly 10 digits";
+      isValid = false;
+    }
+
+    if (!input.password.trim()) {
+      newErrors.password = "Password is required";
+      isValid = false;
+    } else if (input.password.length < 6) {
+      newErrors.password = "Password must be between 6 to 16 characters";
+      isValid = false;
+    } else if (input.password.length >= 16) {
+      newErrors.password = "Password must be between 6 to 16 characters";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
 
   const changeEventHandler = (e) => {
-    setInput({ ...input, [e.target.name]: e.target.value });
-    // validation st
-    
-    // end
-  }
+    const { name, value } = e.target;
+    setInput({ ...input, [name]: value });
+    setErrors({ ...errors, [name]: "" }); // clear error on change
+  };
 
   const changeFileHandler = (e) => {
     setInput({ ...input, file: e.target.files?.[0] });
-  }
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    if (!validate()) return;
+
     const formData = new FormData();
     formData.append("fullname", input.fullname);
     formData.append("email", input.email);
@@ -49,49 +98,56 @@ const Signup = () => {
     if (input.file) {
       formData.append("file", input.file);
     }
+
     try {
       dispatch(setLoading(true));
       const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        },
+        headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       });
       if (res.data.SUCCESS) {
-        navigate("/login")
+        navigate("/login");
         toast.success(res.data.message);
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Something went wrong");
     } finally {
       dispatch(setLoading(false));
     }
-  }
+  };
+
   useEffect(() => {
     if (user) {
       navigate("/");
     }
-  }, [])
+  }, []);
+
   return (
     <>
       <Navbar />
-      <div className='flex items-center justify-center max-w-7xl mx-auto'>
-        <form onSubmit={submitHandler} className='w-1/2 border-gray-200 border-2 rounded-md p-4 my-10'>
+      <div
+  className='flex items-center justify-center min-h-screen bg-cover bg-center'
+  style={{ backgroundImage: `url('/img.jpg')` }}
+>
+        <form onSubmit={submitHandler} className='w-1/2  bg-white bg-opacity-90 border-gray-200 border-2 rounded-md p-6 my-16 shadow-lg backdrop-blur-md'>
           <h1 className='font-bold text-2xl mb-5 text-center'>Signup</h1>
+
           <div className='my-2'>
-            <Label  className="mb-2" htmlFor="fname">Full Name</Label>
-            <Input className="mb-2"
+            <Label htmlFor="fname">Full Name</Label>
+            <Input
               id='fname'
               type='text'
               value={input.fullname}
               name="fullname"
               onChange={changeEventHandler}
               placeholder="Enter your Full Name" />
+            {errors.fullname && <p className="text-red-500 text-sm">{errors.fullname}</p>}
           </div>
+
           <div className='my-2'>
             <Label htmlFor="email">Email</Label>
-            <Input className="my-2"
+            <Input
               id='email'
               type='email'
               value={input.email}
@@ -99,26 +155,31 @@ const Signup = () => {
               onChange={changeEventHandler}
               placeholder="Enter Your mail" />
           </div>
+
           <div className='my-2'>
-            <Label htmlFor="email">Phone Number</Label>
-            <Input className="my-2"
+            <Label htmlFor="phone">Phone Number</Label>
+            <Input
               id='phone'
               type='text'
               value={input.phoneNumber}
               name="phoneNumber"
               onChange={changeEventHandler}
               placeholder="Enter your Phone number" />
+            {errors.phoneNumber && <p className="text-red-500 text-sm">{errors.phoneNumber}</p>}
           </div>
+
           <div className='my-2'>
-            <Label htmlFor="email">Password</Label>
-            <Input className="my-2"
+            <Label htmlFor="password">Password</Label>
+            <Input
               id='password'
               type='password'
               value={input.password}
               name="password"
               onChange={changeEventHandler}
-              placeholder="password" />
+              placeholder="Password" />
+            {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
           </div>
+
           <div className='flex items-center justify-between'>
             <RadioGroup className='flex items-center gap-4 my-5'>
               <div className="flex items-center space-x-2">
@@ -143,22 +204,26 @@ const Signup = () => {
                 <Label htmlFor="r2">Recruiter</Label>
               </div>
             </RadioGroup>
+
             <div className='flex items-center gap-2'>
               <Label htmlFor="file">Profile</Label>
-              <Input id="file" accept="image//*" type="file" onChange={changeFileHandler} className='cursor-pointer' />
+              <Input id="file" accept="image/*" type="file" onChange={changeFileHandler} className='cursor-pointer' />
             </div>
           </div>
-          {
-            loading ? <Button className='w-full my-4'> <Loader2 className='mr-2 h-4 w-4 animate-spin' />Please wait</Button> :
 
-              <Button type="submit" className='w-full my-4'>Signup</Button>
-          }
-          <span className='text-sm'>Alredy have an account? <Link to='/login' className='text-blue-600'>Login</Link></span>
+          {loading ? (
+            <Button className='w-full my-4'>
+              <Loader2 className='mr-2 h-4 w-4 animate-spin' />Please wait
+            </Button>
+          ) : (
+            <Button type="submit" className='w-full my-4'>Signup</Button>
+          )}
+
+          <span className='text-md mx-44'>Already have an account? <Link to='/login' className='text-blue-600'>Login</Link></span>
         </form>
       </div>
     </>
+  );
+};
 
-  )
-}
-
-export default Signup
+export default Signup;
